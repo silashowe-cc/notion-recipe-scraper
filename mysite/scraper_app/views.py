@@ -5,4 +5,4 @@ from django.http import HttpResponse
 # These are used to return something to a http request To map them, we also need to set up something with URLs
 
 def index (request):
-    return HttpResponse("hello world")
+    return render(request, 'scraper_app/index.html')
