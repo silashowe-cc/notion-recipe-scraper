@@ -3,17 +3,8 @@ from recipe_scrapers import scrape_me
 import json
 import requests
 
-token = 'secret_Q1mFXfdB9azYxEoTWBAubBIyGDhBs2xKEgwIF5lvtM6'
-database_id = '6165fd1b85d942ea96264d99b61cc241'
 
-headers = {
-    "Authorization": "Bearer " + token,
-    "Content-Type": "application/json",
-    "Notion-Version": "2022-02-22"
-}
-
-
-def createRecipe(database_id, headers, name, servings, time, children, url, image):
+def createRecipe(database_id, headers, name, servings, time, children, url, image, icon):
     createUrl = 'https://api.notion.com/v1/pages'
     payload = {
         "parent": {
@@ -57,13 +48,18 @@ def createRecipe(database_id, headers, name, servings, time, children, url, imag
                 "url": str(url)
             },
         },
-        "children": children
+        "children": children,
+        "icon": {
+            "type": "emoji",
+            "emoji": icon
+        },
 
     }
 
     data = json.dumps(payload)
     res = requests.request("POST", createUrl, headers=headers, data=data)
 
+    return ([res.status_code, res.text])
     print(res.status_code)
     print(res.text)
     # recipe = mapNotionResultToMovie(r.json())
@@ -143,7 +139,15 @@ def children_format(ing, inst):
     return children
 
 
-def main(input1):
+def main(input1, token, database_id, icon):
     scraper = scrape_me(input1)
-    createRecipe(database_id, headers, scraper.title(),
-                 scraper.yields(), scraper.total_time(), children_format(scraper.ingredients(), scraper.instructions()), input1, scraper.image())
+    #token = 'secret_Q1mFXfdB9azYxEoTWBAubBIyGDhBs2xKEgwIF5lvtM6'
+    #database_id = '6165fd1b85d942ea96264d99b61cc241'
+
+    headers = {
+        "Authorization": "Bearer " + token,
+        "Content-Type": "application/json",
+        "Notion-Version": "2022-06-28"
+    }
+    return (createRecipe(database_id, headers, scraper.title(),
+                         scraper.yields(), scraper.total_time(), children_format(scraper.ingredients(), scraper.instructions()), input1, scraper.image(), icon))
