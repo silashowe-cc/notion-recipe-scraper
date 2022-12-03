@@ -62,7 +62,6 @@ def createRecipe(database_id, headers, name, servings, time, children, url, imag
     return ([res.status_code, res.text])
     print(res.status_code)
     print(res.text)
-    # recipe = mapNotionResultToMovie(r.json())
     # return recipe
 
 
@@ -141,9 +140,6 @@ def children_format(ing, inst):
 
 def main(input1, token, database_id, icon):
     scraper = scrape_me(input1)
-    #token = 'secret_Q1mFXfdB9azYxEoTWBAubBIyGDhBs2xKEgwIF5lvtM6'
-    #database_id = '6165fd1b85d942ea96264d99b61cc241'
-
     headers = {
         "Authorization": "Bearer " + token,
         "Content-Type": "application/json",

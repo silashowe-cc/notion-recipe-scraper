@@ -12,7 +12,8 @@ def index (request):
             recipe_url = form.cleaned_data['recipe_url']
             token = form.cleaned_data['token']
             db = form.cleaned_data['dbid']
-            scrape_res = scraper(recipe_url, token, db)
+            icon = form.cleaned_data['icon']
+            scrape_res = scraper(recipe_url, token, db, icon)
             return HttpResponse(scrape_res)
     else:
         form = ScraperForm()
