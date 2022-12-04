@@ -1,4 +1,8 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+
+from .models import CustomUser
+
 
 emoji_choices = (
     ("🍇", "🍇"),("🍈", "🍈"),("🍊", "🍊"),("🍋", "🍋"),("🍌", "🍌"),
@@ -30,3 +34,15 @@ class ScraperForm(forms.Form):
     dbid = forms.CharField(max_length=100)
     recipe_url = forms.URLField()
     icon = forms.ChoiceField(choices = emoji_choices)
+
+class CustomUserCreationForm(UserCreationForm):
+
+    class Meta:
+        model = CustomUser
+        fields = ("username", "email")
+
+class CustomUserChangeForm(UserChangeForm):
+
+    class Meta:
+        model = CustomUser
+        fields = ("username", "email")
