@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .forms import ScraperForm
 from .scraper import main as scraper
+from django.shortcuts import redirect
+
 # Create your views here.
 # These are used to return something to a http request To map them, we also need to set up something with URLs
 
@@ -18,3 +20,6 @@ def index (request):
     else:
         form = ScraperForm()
     return render(request, 'scraper_app/index.html', {'form': form})
+
+def redirect_view(request):
+    return redirect('/scraper')
